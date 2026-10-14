@@ -696,7 +696,7 @@ a {
   letter-spacing: 0.05em;
 }
 
-/* Hero Visual / Circular Avatar */
+/* Hero Visual / Circular Avatar (Static - No Movement) */
 .hero-visual {
   position: relative;
   display: flex;
@@ -707,30 +707,16 @@ a {
 
 .profile-circle-outer {
   position: relative;
-  width: 320px;
-  height: 320px;
+  width: 310px;
+  height: 310px;
   border-radius: 50%;
   padding: 6px;
   background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #06b6d4 100%);
-  box-shadow: 0 0 35px rgba(99, 102, 241, 0.4), 0 0 70px rgba(6, 182, 212, 0.2);
+  box-shadow: 0 0 35px rgba(99, 102, 241, 0.35), 0 0 65px rgba(6, 182, 212, 0.2);
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: transform var(--transition-normal), box-shadow var(--transition-normal);
-  animation: pulseGlowCircle 4s ease-in-out infinite alternate;
-}
-
-@keyframes pulseGlowCircle {
-  0% {
-    box-shadow: 0 0 25px rgba(99, 102, 241, 0.35), 0 0 50px rgba(6, 182, 212, 0.15);
-  }
-  100% {
-    box-shadow: 0 0 45px rgba(99, 102, 241, 0.55), 0 0 80px rgba(6, 182, 212, 0.35);
-  }
-}
-
-.profile-circle-outer:hover {
-  transform: scale(1.03);
+  /* Completely static: no animation, no transform */
 }
 
 .profile-circle-inner {
@@ -748,15 +734,12 @@ a {
   height: 100%;
   object-fit: cover;
   object-position: top center;
-  transition: transform var(--transition-slow);
-}
-
-.profile-circle-outer:hover .profile-circle-img {
-  transform: scale(1.08);
+  display: block;
+  /* Image remains stable and fixed */
 }
 
 .profile-circle-badge {
-  margin-top: 1.5rem;
+  margin-top: 1.4rem;
   display: inline-flex;
   align-items: center;
   gap: 0.65rem;
@@ -771,13 +754,13 @@ a {
   color: var(--text-primary);
 }
 
-/* Floating Tech Badges */
+/* Static Tech Badges (Fixed position without floating/bobbing) */
 .floating-badge {
   position: absolute;
   display: flex;
   align-items: center;
   gap: 0.6rem;
-  padding: 0.6rem 1.1rem;
+  padding: 0.55rem 1.05rem;
   background: var(--bg-card);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-full);
@@ -787,30 +770,26 @@ a {
   font-weight: 600;
   color: var(--text-primary);
   z-index: 5;
-  animation: floatBadge 5s ease-in-out infinite alternate;
+  /* No floating animation - rock solid position */
 }
 
 .floating-badge.badge-1 {
-  top: 12%;
-  left: -15%;
-  animation-delay: 0s;
+  top: 8%;
+  left: -12%;
 }
 
 .floating-badge.badge-2 {
-  bottom: 22%;
-  right: -12%;
-  animation-delay: 1.8s;
+  bottom: 18%;
+  right: -10%;
 }
 
 .floating-badge.badge-3 {
-  top: -6%;
-  right: 8%;
-  animation-delay: 3.2s;
+  top: -4%;
+  right: 6%;
 }
 
-@keyframes floatBadge {
-  0% { transform: translateY(0); }
-  100% { transform: translateY(-12px); }
+.hero-badges-wrapper {
+  display: contents;
 }
 
 .badge-icon {
@@ -1914,6 +1893,18 @@ textarea.form-control {
 }
 
 @media (max-width: 768px) {
+  html, body {
+    overflow-x: hidden;
+  }
+
+  section {
+    padding: 3.5rem 0;
+  }
+
+  .container {
+    padding: 0 1.25rem;
+  }
+
   .nav-links, .btn-nav-resume {
     display: none;
   }
@@ -1922,71 +1913,252 @@ textarea.form-control {
     display: flex;
   }
   
+  .hero-section {
+    padding-top: calc(var(--nav-height) + 1.25rem);
+    padding-bottom: 3.5rem;
+    min-height: auto;
+  }
+
+  .hero-grid {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 2.25rem;
+  }
+
+  .hero-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .hero-status-pill {
+    font-size: 0.76rem;
+    padding: 0.35rem 0.85rem;
+    max-width: 100%;
+    text-align: center;
+    margin-bottom: 1.25rem;
+  }
+
   .hero-title {
-    font-size: 2.35rem;
+    font-size: 2.15rem;
+    line-height: 1.2;
+    margin-bottom: 1rem;
   }
-  
+
+  .hero-description {
+    font-size: 0.98rem;
+    line-height: 1.65;
+    margin-bottom: 1.75rem;
+  }
+
+  .hero-cta-group {
+    width: 100%;
+    justify-content: center;
+    gap: 0.85rem;
+    margin-bottom: 2rem;
+  }
+
+  .hero-cta-group .btn {
+    flex: 1 1 auto;
+    min-width: 140px;
+    padding: 0.75rem 1.25rem;
+  }
+
+  .hero-stats {
+    width: 100%;
+    max-width: 100%;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+    padding-top: 1.5rem;
+  }
+
+  .stat-number {
+    font-size: 1.55rem;
+    justify-content: center;
+  }
+
+  .stat-label {
+    font-size: 0.7rem;
+  }
+
+  /* Rock-Solid Profile Avatar on Mobile (No Movement) */
+  .hero-visual {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+  }
+
+  .profile-circle-outer {
+    width: 220px;
+    height: 220px;
+    padding: 5px;
+    margin: 0 auto;
+    box-shadow: 0 0 25px rgba(99, 102, 241, 0.35), 0 0 45px rgba(6, 182, 212, 0.2);
+  }
+
+  .profile-circle-badge {
+    margin-top: 1rem;
+    font-size: 0.82rem;
+    padding: 0.45rem 1rem;
+    max-width: 90%;
+  }
+
+  /* Tech Badges on Mobile: clean horizontal flex row, NO absolute overflow */
+  .hero-badges-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 0.85rem;
+    width: 100%;
+    max-width: 320px;
+  }
+
+  .floating-badge {
+    position: static;
+    top: auto;
+    bottom: auto;
+    left: auto;
+    right: auto;
+    margin: 0;
+    font-size: 0.76rem;
+    padding: 0.4rem 0.8rem;
+  }
+
   .section-title {
-    font-size: 2rem;
+    font-size: 1.85rem;
   }
-  
+
+  .section-header {
+    margin-bottom: 2.5rem;
+  }
+
   .about-grid {
     grid-template-columns: 1fr;
-    gap: 2.5rem;
+    gap: 2rem;
   }
-  
-  .skills-categories-grid {
-    grid-template-columns: 1fr;
+
+  .info-card {
+    padding: 1.5rem 1.25rem;
   }
-  
-  .contact-grid {
-    grid-template-columns: 1fr;
-  }
-  
-  .cert-grid {
-    grid-template-columns: 1fr;
-  }
-  
+
   .pillars-grid {
     grid-template-columns: 1fr;
+    gap: 1.25rem;
+    margin-top: 2.5rem;
   }
-  
+
+  .skills-categories-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .skill-category-card {
+    padding: 1.5rem 1.25rem;
+  }
+
+  .skill-badges-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.65rem;
+  }
+
+  .projects-grid {
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+  }
+
+  .project-card-header {
+    height: 160px;
+    padding: 1.25rem;
+  }
+
+  .project-card-body {
+    padding: 1.35rem 1.25rem;
+  }
+
+  .timeline-toggle-wrapper {
+    margin-bottom: 2.25rem;
+  }
+
+  .timeline-tab-btn {
+    padding: 0.55rem 1.15rem;
+    font-size: 0.82rem;
+  }
+
+  .timeline-tree {
+    padding-left: 1.6rem;
+  }
+
+  .timeline-tree::before {
+    left: 6px;
+  }
+
+  .timeline-dot {
+    left: -1.6rem;
+    width: 14px;
+    height: 14px;
+    top: 5px;
+  }
+
+  .timeline-card {
+    padding: 1.35rem 1.15rem;
+  }
+
+  .cert-grid {
+    grid-template-columns: 1fr;
+    gap: 1.15rem;
+  }
+
+  .contact-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .contact-highlight-card,
+  .contact-form-card {
+    padding: 1.65rem 1.25rem;
+  }
+
   .footer-top-grid {
     grid-template-columns: 1fr;
     gap: 2rem;
   }
-  
-  .profile-circle-outer {
-    width: 250px;
-    height: 250px;
-  }
-  
-  .floating-badge.badge-1 {
-    left: -5%;
-  }
-  
-  .floating-badge.badge-2 {
-    right: -5%;
+
+  .footer-bottom {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.75rem;
   }
 }
 
 @media (max-width: 480px) {
+  .hero-title {
+    font-size: 1.85rem;
+  }
+
   .hero-stats {
     grid-template-columns: 1fr;
-    gap: 1.25rem;
-    text-align: center;
+    gap: 1rem;
   }
-  
+
   .hero-cta-group {
     flex-direction: column;
-    width: 100%;
   }
-  
+
   .hero-cta-group .btn {
     width: 100%;
   }
-  
-  .projects-grid {
+
+  .profile-circle-outer {
+    width: 185px;
+    height: 185px;
+  }
+
+  .skill-badges-grid {
     grid-template-columns: 1fr;
   }
 }
